@@ -2,6 +2,7 @@ import Vue from "vue";
 import ProductMixin from "./mixins/ProductMixin";
 import Errors from "@admin/js/Errors";
 import { generateSlug } from "@admin/js/functions";
+import axios from "axios"; // Import axios để gọi API
 
 Vue.prototype.defaultCurrencySymbol = Ecommerce.defaultCurrencySymbol;
 
@@ -83,9 +84,23 @@ new Vue({
             });
         },
 
-        submit({ submissionType }) {
+        <!--submit({ submissionType }) {
             this.formSubmissionType = submissionType;
-        },
+        },-->
+        //sửa 
+        submit({ submissionType }) {
+        this.formSubmissionType = submissionType;
+    
+        axios.post("/admin/products/store", this.form)
+            .then(response => {
+                alert(response.data.message);
+                this.resetForm(); // Reset form sau khi thêm thành công
+            })
+            .catch(error => {
+                this.errors.record(error.response.data.errors);
+            });
+    }
+
     },
 });
 //nằm trong folder asset\admin\js
