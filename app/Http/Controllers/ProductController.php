@@ -57,11 +57,29 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $product = Product::create($request->all());
-        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được thêm!');
-    }
+ public function store(Request $request) {
+        // Kiểm tra dữ liệu đầu vào
+        $validatedData = $request->validate([
+            'brand_id' => 'required|integer',
+            'tax_class_id' => 'nullable|integer',
+            'is_active' => 'boolean',
+            'slug' => 'required|unique:products,slug',
+            'meta' => 'nullable|array',
+            'attributes' => 'nullable|array',
+            'downloads' => 'nullable|array',
+            'variations' => 'nullable|array',
+            'variants' => 'nullable|array',
+            'options' => 'nullable|array',
+        ]);
+
+        // Lưu sản phẩm vào database
+        $product = Product::create($validatedData);
+
+        return response()->json([
+            'message' => 'Sản phẩm đã được thêm thành công!',
+            'product' => $product
+        ], 201);
+    }//sửa
 
     /**
      * Display the specified resource.
