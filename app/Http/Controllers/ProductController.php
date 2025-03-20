@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Product;
-
+use Illuminate\Validation\ValidationException;//thêm
 
 class ProductController extends Controller
 {
