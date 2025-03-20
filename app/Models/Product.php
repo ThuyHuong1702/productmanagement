@@ -13,6 +13,15 @@ class Product extends Model
         'special_price_start', 'special_price_end', 'selling_price', 'sku',
         'manage_stock', 'qty', 'in_stock', 'viewed', 'is_active'
     ];
+    //thêm
+    protected $casts = [
+        'meta' => 'array',
+        'attributes' => 'array',
+        'downloads' => 'array',//
+        'variations' => 'array',
+        'variants' => 'array',
+        'options' => 'array'
+    ];
 
     public function brand()
     {
